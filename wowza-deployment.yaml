@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wowza-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wowza
+  template:
+    metadata:
+      labels:
+        app: wowza
+    spec:
+      containers:
+      - name: wowza
+        image: wowzamedia/wowza-streaming-engine-linux:latest
+        command: ["/bin/sh", "-c", "/sbin/entrypoint.sh"]
+        ports:
+        - containerPort: 1935
+        - containerPort: 8088
+        env:
+        - name: WSE_LIC
+          value: "ET1B4-TTEpx-CGJHA-zHHvy-63KzG-P6RAp-47UeyP7mNvWp" # License key
+        - name: WSE_MGR_USER
+          value: "admin" # Username
+        - name: WSE_MGR_PASS
+          value: "password" # Password
+        volumeMounts:
+        - name: wowza-vod-application-configmap
+          mountPath: /usr/local/WowzaStreamingEngine/conf/vod/Application.xml
+          subPath: Application.xml
+        - name: wowza-content-volume
+          mountPath: /usr/local/WowzaStreamingEngine/content
+      volumes:
+      - name: wowza-vod-application-configmap
+        configMap:
+          name: wowza-vod-application-configmap
+      - name: wowza-content-volume
+        hostPath:
+          path: /tmp # Set the media storage
+          type: Directory

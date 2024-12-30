@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wowza-service
+spec:
+  type: NodePort
+  selector:
+    app: wowza
+  ports:
+  - name: port-1935
+    protocol: TCP
+    port: 1935
+    targetPort: 1935
+    nodePort: 30035
+  - name: port-8088
+    protocol: TCP
+    port: 8088
+    targetPort: 8088
+    nodePort: 30088
