@@ -17,8 +17,8 @@ spec:
         image: wowzamedia/wowza-streaming-engine-linux:latest
         command: ["/bin/sh", "-c", "/sbin/entrypoint.sh"]
         ports:
-        - containerPort: 1935
-        - containerPort: 8088
+        - containerPort: 1935 # Streaming port
+        - containerPort: 8088 # Manager log
         env:
         - name: WSE_LIC
           value: "ET1B4-TTEpx-CGJHA-zHHvy-63KzG-P6RAp-47UeyP7mNvWp" # License key
@@ -32,11 +32,23 @@ spec:
           subPath: Application.xml
         - name: wowza-content-volume
           mountPath: /usr/local/WowzaStreamingEngine/content
+        - name: wowza-log-volume
+          mountPath: /usr/local/WowzaStreamingEngine/logs
+        - name: wowza-manager-log-volume
+          mountPath: /usr/local/WowzaStreamingEngine/manager/logs
       volumes:
       - name: wowza-vod-application-configmap
         configMap:
           name: wowza-vod-application-configmap
       - name: wowza-content-volume
         hostPath:
-          path: /tmp # Set the media storage
+          path: /wowza/content # Set the media storage
+          type: Directory
+      - name: wowza-log-volume
+        hostPath:
+          path: /wowza/wowza-log-volume # Set the logs storage
+          type: Directory
+      - name: wowza-manager-log-volume
+        hostPath:
+          path: /wowza/wowza-manager-log-volume # Set the manager logs storage
           type: Directory
