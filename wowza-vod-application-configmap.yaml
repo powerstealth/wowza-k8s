@@ -32,7 +32,7 @@ data:
                     -->
                     <Streams>
                             <StreamType>default</StreamType>
-                            <StorageDir>${com.wowza.wms.context.VHostConfigHome}/pippo</StorageDir>
+                            <StorageDir>${com.wowza.wms.context.VHostConfigHome}/content</StorageDir>
                             <KeyDir>${com.wowza.wms.context.VHostConfigHome}/keys</KeyDir>
                             <!-- LiveStreamPacketizers (separate with commas): cupertinostreamingpacketizer,   mpegdashstreamingpacketizer, cupertinostreamingrepeater,   mpegdashstreamingrepeater, dvrstreamingpacketizer, dvrstreamingrepeater -->
                             <LiveStreamPacketizers></LiveStreamPacketizers>
